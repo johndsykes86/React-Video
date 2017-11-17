@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+//This is an example of JS modules. 'react' is the core React library
+import React from 'react'
 
-import App from './components/app';
-import reducers from './reducers';
+// 'react-dom' is the library that renders JSX to the DOM
+import ReactDOM from 'react-dom'
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+//Create a new component. it should produce some html
 
-ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+const App = () => {
+  return <div>Hi!</div>
+}
+
+
+//The produced component should also get inserted into the DOM so we can see it in the browser.
+
+ReactDOM.render(App)
