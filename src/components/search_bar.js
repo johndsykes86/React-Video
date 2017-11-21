@@ -15,10 +15,13 @@ class SearchBar extends Component {
   }
 
 //onChange handles changes in the input element.
+// adding value  makes the input a controlled form element, you can't change it until the value changes via onChange
   render(){
     return(
       <div>
-        <input type="text" onChange={this.handleInputChange.bind(this)}/>
+        <input type="text"
+          value={this.state.term}
+          onChange={this.handleInputChange.bind(this)}/>
         <p>Value of the input: {this.state.term}</p>
       </div>
     )
