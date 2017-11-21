@@ -4,9 +4,20 @@ import React from 'react'
 // 'react-dom' is the library that renders JSX to the DOM
 import ReactDOM from 'react-dom'
 
+//importing SearchBar components using a relative path
+import SearchBar from './components/search_bar'
+
+//Youtube API key
+const API_KEY = 'AIzaSyD4VKTqZV--iVTiiwuUuXBWz5PN222h-Ww'
+const userName = "Johnathon"
+
 //Create a new component. it should produce some html
 const App = () => {
-  return <div>Hi!</div>
+  return (
+    <div>
+      <SearchBar default={`Hello, ${userName}`}/>
+    </div>
+  )
 }
 
 
