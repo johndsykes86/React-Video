@@ -1,27 +1,53 @@
-//This is an example of JS modules. 'react' is the core React library
-import React from 'react'
-
-// 'react-dom' is the library that renders JSX to the DOM
+import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-
-//importing SearchBar components using a relative path
+import YTSearch from 'youtube-api-search'
 import SearchBar from './components/search_bar'
-
+import VideoList from './components/video_list'
+import VideoDetail from './components/video_detail'
+import _ from 'lodash'
 //Youtube API key
 const API_KEY = 'AIzaSyD4VKTqZV--iVTiiwuUuXBWz5PN222h-Ww'
-const userName = "Johnathon"
+
+
 
 //Create a new component. it should produce some html
-const App = () => {
-  return (
-    <div>
-      <SearchBar default={`Hello, ${userName}`}/>
-    </div>
-  )
+class App extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      videos: [],
+      selectedVideo: null,
+      searchComplete: null
+    }
+  }
+
+  videoSearch(term){
+    YTSearch({key: API_KEY, term: term}, (videos) => {
+      this.setState({
+        videos: videos,
+        selectedVideo: null,
+        searchComplete: true,
+      })
+    })
+  }
+
+
+
+  render(){
+
+      const videoSearch = _.debounce((term)=> { this.videoSearch(term)}, 300)
+
+    return(
+      <div>
+        <SearchBar onSearchTermChange={videoSearch}/>
+        <VideoDetail video={this.state.selectedVideo} completedSearch={this.state.searchComplete}/>
+        <VideoList
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+          videos={this.state.videos}/>
+      </div>
+    )
+  }
 }
 
 
-//The produced component should also get inserted into the DOM so we can see it in the browser. .render() takes two arguments
-// the first argument: the <> wraps the const App into an instance.
-// second: Targets where the returned instance should be rendered
 ReactDOM.render(<App/>, document.querySelector('.container'))
